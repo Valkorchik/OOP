@@ -14,6 +14,7 @@ int main()
 	cin>>n;
 	First A(n);
 	cin>>m1>>m2;
-	Second B(m1, m2);
+	Second B;
+	B.Sign(m1,m2);
 	f(A,B);
 }

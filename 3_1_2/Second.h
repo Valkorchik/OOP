@@ -7,6 +7,6 @@ private:
 	int M1,M2;
 public:
 	friend int f(First&, Second&);
-	Second(int m1, int m2);
+	void Sign(int&, int&);
 };
 #endif
