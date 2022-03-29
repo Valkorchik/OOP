@@ -40,14 +40,14 @@ string cl_base::get_name()
 cl_base* cl_base::get_object_by_name(string name)
 {
 	cl_base* val = nullptr;
-	bool chek = false;
+	bool check = false;
 	for (size_t i = 0; i < this->children.size(); i++)
 	{
 		val = children[i];
 
 		if (children[i]->get_name() == name)
 		{
-			chek = true;
+			check = true;
 			return children[i];
 		}
 	}
