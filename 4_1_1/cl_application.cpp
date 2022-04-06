@@ -16,7 +16,7 @@ void cl_application::bild_tree_objects()
 		temp_root_obj= get_obj_by_name(temp_root);
 		if(temp_root_obj!= nullptr)
 		{
-			new cl_node(temp_root_obj,temp_root);
+			new cl_node(temp_root_obj,temp_object);
 		}
 	}
 }

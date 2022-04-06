@@ -5,7 +5,7 @@ cl_base::cl_base(cl_base* parent, string object_name)
 {
 	this->object_name = object_name;
 	this->parent=parent;
-	while (parent)
+	if (parent)
 	{
 		parent->add(this);
 	}
@@ -16,6 +16,10 @@ void cl_base::name_setter(string name)
 }
 void cl_base::parent_setter(cl_base* parent)
 {
+	if (parent != nullptr)
+	{
+		parent->remove(object_name);
+	}
 	this->parent = parent;
 	this->parent->add(this);
 }
@@ -32,6 +36,17 @@ void cl_base::add(cl_base* children_point)
 	if(children_point!= nullptr)
 	{
 		children.push_back(children_point);
+	}
+}
+void cl_base::remove(string name)
+{
+	for (int i = 0; i <  children.size(); i++)
+	{
+		if (children[i]->get_name() == name)
+		{
+			children.erase(children.begin() + i);
+			break;
+		}
 	}
 }
 cl_base* cl_base::get_obj_by_name(string name)
@@ -62,7 +77,7 @@ void cl_base::print_tree()
 		cout<<endl<<object_name;
 		for (int i = 0; i < children.size(); i++)
 		{
-			cout<<" "<<children[i]->get_obj_by_name();
+			cout<<" "<<children[i]->get_name();
 		}
 		for (int i = 0; i < children.size(); i++)
 		{
