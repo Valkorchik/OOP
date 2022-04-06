@@ -7,20 +7,19 @@ using namespace std;
 class cl_base
 {
 private:
-	string object_name = "";
+	string object_name;
 	cl_base* parent;
-	int index = 0;
-public:
-	static cl_base* root;
 	vector <cl_base*> children;
-	cl_base();
-	cl_base(string object_name, cl_base* parent);
+public:
+	cl_base(cl_base* parent, string object_name="empty");
 	void name_setter(string name);
 	void parent_setter(cl_base* parent);
 	cl_base* get_parent();
 	string get_name();
-	cl_base* get_object_by_name(string name);
+	void add(cl_base* parent);
+	cl_base* get_obj_by_name(string object_name);
 	void print_tree();
+	
 	~cl_base();
 };
 #endif

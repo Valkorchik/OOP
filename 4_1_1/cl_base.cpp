@@ -1,25 +1,14 @@
 #include "cl_base.h"
+#include "cl_node.h"
 #include <string>
-cl_base* cl_base::root = new cl_base();
-cl_base::cl_base()
-{
-	parent = nullptr;
-}
-cl_base::cl_base(string object_name, cl_base* parent)
+cl_base::cl_base(cl_base* parent, string object_name)
 {
 	this->object_name = object_name;
-	if (parent == nullptr)
+	this->parent=parent;
+	while (parent)
 	{
-		parent_setter(root);
-		(this->parent)->children.push_back(this);
+		parent->add(this);
 	}
-	else
-	{
-		this->parent = parent;
-		parent->children.push_back(this);
-	}
-	children.push_back(this);
-	index = (this->parent)->children.size() - 1;
 }
 void cl_base::name_setter(string name)
 {
@@ -28,6 +17,7 @@ void cl_base::name_setter(string name)
 void cl_base::parent_setter(cl_base* parent)
 {
 	this->parent = parent;
+	this->parent->add(this);
 }
 cl_base* cl_base::get_parent()
 {
@@ -37,44 +27,44 @@ string cl_base::get_name()
 {
 	return object_name;
 }
-cl_base* cl_base::get_object_by_name(string name)
+void cl_base::add(cl_base* children_point)
 {
-	cl_base* val = nullptr;
-	bool check = false;
-	for (size_t i = 0; i < this->children.size(); i++)
+	if(children_point!= nullptr)
 	{
-		val = children[i];
-
-		if (children[i]->get_name() == name)
+		children.push_back(children_point);
+	}
+}
+cl_base* cl_base::get_obj_by_name(string name)
+{
+	cl_base* val;
+	if(object_name==name)
+	{
+		return this;
+	}
+	for (int i = 0; i < this->children.size(); i++)
+	{
+		val = children[i]->get_obj_by_name(name);
+		if (val!= nullptr)
 		{
-			check = true;
-			return children[i];
+			return val;
 		}
 	}
-	for (size_t i = 1; i < children.size(); i++)
-	{
-		val = (children[i]->get_object_by_name(name));
-		if ((children[i]->get_object_by_name(name))->get_name() ==
-			name)
-		{
-			return (children[i]->get_object_by_name(name));
-		}
-	}
-	return val;
+	return nullptr;
 }
 void cl_base::print_tree()
 {
-	for (int i = 0; i < children.size(); i++)
+	if(parent== nullptr)
 	{
-		if (i == 0)
-			cout << endl;
-		cout << children[i]->get_name();
-		if(i+1 < children.size())
-			cout << " ";
+		cout<<object_name;
 	}
-	for (size_t i = 1; i < children.size(); i++)
+	if(children.size()>0)
 	{
-		if (children[i]->children.size() > 1)
+		cout<<endl<<object_name;
+		for (int i = 0; i < children.size(); i++)
+		{
+			cout<<" "<<children[i]->get_obj_by_name();
+		}
+		for (int i = 0; i < children.size(); i++)
 		{
 			children[i]->print_tree();
 		}
