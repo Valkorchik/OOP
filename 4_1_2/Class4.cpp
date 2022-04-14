@@ -9,5 +9,5 @@ Class4::Class4(string Object_Name, int Value): Class3(Object_Name,Value)
 }
 void Class4::Print()
 {
-	cout<<this->Object_Name<<" "<<this->Value<<endl;
+	cout<<this->Object_Name<<" "<<this->Value;
 }
