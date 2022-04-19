@@ -16,6 +16,6 @@ int main()
 	std::cout<<((Class5*)p)->name_getter()<<std::endl;
 	std::cout<<((Class6*)p)->name_getter()<<std::endl;
 	std::cout<<((Class7*)p)->name_getter()<<std::endl;
-	std::cout<<p->name_getter()<<std::endl;
+	std::cout<<p->name_getter();
 	return 0;
 }
