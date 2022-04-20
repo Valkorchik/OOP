@@ -1,7 +1,5 @@
 #include <iostream>
-#include <string>
 #include "Class4.h"
-
 int main()
 {
 	Class4* obj;
