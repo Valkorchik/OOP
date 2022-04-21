@@ -1,16 +1,19 @@
 #include <iostream>
 #include "Triangle.h"
 #include <vector>
-int main() {
+int main()
+{
 	int a, b, c, n;
 	char sign;
 	std::cin >> n;
 	std::vector<Triangle> obj;
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++)
+	{
 		std::cin >> a >> b >> c;
 		obj.push_back(Triangle(a, b, c));
 	}
-	while (std::cin >> a >> sign >> b) {
+	while (std::cin >> a >> sign >> b)
+	{
 		switch (sign)
 		{
 			case '+':
