@@ -12,7 +12,7 @@ void cl_application::bild_tree_objects()
 		cin >> temp_root;
 		if (temp_root == "endtree")
 		{
-			return;
+			break;
 		}
 		cin>>temp_object>>cl_num;
 		temp_root_obj= get_obj_by_name(temp_root);
