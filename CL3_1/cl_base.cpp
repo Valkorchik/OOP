@@ -72,7 +72,7 @@ void cl_base::print_tree(bool out_condition,const int lvl)
 		cout<<"    ";
 	}
 	cout<<this->get_name();
-	if(out_condition)
+	if(out_condition!=0)
 	{
 		if(this->condition_getter())
 		{
@@ -89,9 +89,9 @@ void cl_base::print_tree(bool out_condition,const int lvl)
 		}
 	}
 }
-void cl_base::condition_setter(int condition_value)
+void cl_base::condition_setter(int condition_position)
 {
-	if(condition_value!=0)
+	if(condition_position!=0)
 	{
 		cl_base* t_parent=get_parent();
 		while(t_parent!= nullptr)
@@ -102,10 +102,10 @@ void cl_base::condition_setter(int condition_value)
 			}
 			t_parent=t_parent->get_parent();
 		}
-		condition=true;
+		condition=condition_position;
 	}
 }
-bool cl_base::condition_getter()
+int cl_base::condition_getter()
 {
 	return condition;
 }

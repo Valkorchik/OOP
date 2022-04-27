@@ -10,7 +10,7 @@ private:
 	string object_name;
 	cl_base* parent;
 	vector <cl_base*> children;
-	bool condition=false;
+	int condition;
 	void remove(string name);
 	void add(cl_base* children_point);
 public:
@@ -22,6 +22,6 @@ public:
 	cl_base* get_obj_by_name(string object_name);
 	void print_tree(bool out_condition=false,const int lvl=0);
 	void condition_setter(int condition_value);
-	bool condition_getter();
+	int condition_getter();
 };
 #endif
