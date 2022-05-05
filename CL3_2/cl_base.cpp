@@ -4,7 +4,7 @@ cl_base::cl_base(cl_base* parent, string object_name)
 {
 	this->object_name = object_name;
 	this->parent=parent;
-	if (parent)
+	if (parent!=nullptr)
 	{
 		parent->add(this);
 	}
@@ -50,11 +50,11 @@ void cl_base::remove(string name)
 }
 cl_base* cl_base::get_obj_by_name(string name)
 {
-	if(object_name==name)
+	if(this->object_name==name)
 	{
 		return this;
 	}
-	for (int i = 0; i < this->children.size(); i++)
+	for (int i = 0; i < children.size(); i++)
 	{
 		cl_base* val = children[i]->get_obj_by_name(name);
 		if (val!= nullptr)
@@ -64,6 +64,7 @@ cl_base* cl_base::get_obj_by_name(string name)
 	}
 	return nullptr;
 }
+
 void cl_base::print_tree(bool out_condition,const int lvl)
 {
 	cout<<endl;
@@ -72,12 +73,10 @@ void cl_base::print_tree(bool out_condition,const int lvl)
 		cout<<"    ";
 	}
 	cout<<this->get_name();
-	if(out_condition!=0)
+	if(out_condition==true)
 	{
-		if(this->condition_getter())
-		{
+		if(this->condition_getter()!=0)
 			cout<<" is ready";
-		}
 		else
 			cout<<" is not ready";
 	}
@@ -89,6 +88,7 @@ void cl_base::print_tree(bool out_condition,const int lvl)
 		}
 	}
 }
+
 void cl_base::condition_setter(int condition_position)
 {
 	if(condition_position!=0)
@@ -102,15 +102,17 @@ void cl_base::condition_setter(int condition_position)
 			}
 			t_parent=t_parent->get_parent();
 		}
+		this->condition=condition_position;
 	}
 	else
 	{
+		this->condition=condition_position;
 		for(int i=0;i<children.size();i++)
 		{
 			children[i]->condition_setter(0);
 		}
 	}
-	condition=condition_position;
+
 }
 int cl_base::condition_getter()
 {
@@ -142,11 +144,11 @@ cl_base* cl_base::route_getter(string object_route)
 	string route_part;
 	if(object_route[0]!='/')
 	{
-		object_route='/'+route_part;
+		object_route="/"+object_route;
 		abs=false;
 	}
 	route_part= route_part_getter(object_route,index);
-	if(abs)
+	if(abs==true)
 	{
 		temp=temp->child_getter(route_part);
 	}
@@ -160,12 +162,12 @@ cl_base* cl_base::route_getter(string object_route)
 		{
 			return temp;
 		}
-		if(abs)
+		if(abs==1)
 		{
-			temp=temp->child_getter(object_route);
+			temp=temp->child_getter(route_part);
 		}
 		else
-			temp=temp->get_obj_by_name(object_route);
+			temp=temp->get_obj_by_name(route_part);
 	}
 	return nullptr;
 }
@@ -183,10 +185,12 @@ cl_base* cl_base::root_getter()
 
 string cl_base::route_part_getter(string path, int index)
 {
-	int end,start=1,lvl=1;
+	int end;
+	int start=1;
+	int lvl=1;
 	while(start)
 	{
-		end=path.find('/',start);
+		end=path.find("/",start);
 		if(lvl==index)
 		{
 			return path.substr(start,end-start);

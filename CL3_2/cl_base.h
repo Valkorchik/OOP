@@ -12,7 +12,7 @@ private:
 	vector <cl_base*> children;
 	int condition=0;
 	void remove(string name);
-	void add(cl_base* children_point);
+	void add(cl_base* parent);
 public:
 	cl_base(cl_base* parent, string object_name="empty");
 	void name_setter(string name);
@@ -21,7 +21,7 @@ public:
 	string get_name();
 	cl_base* get_obj_by_name(string object_name);
 	void print_tree(bool out_condition=false,const int lvl=0);
-	void condition_setter(int condition_value);
+	void condition_setter(int condition_position);
 	int condition_getter();
 	cl_base* get_obj_by_path(string path);
 	cl_base* route_getter(string object_route);

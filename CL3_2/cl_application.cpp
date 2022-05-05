@@ -1,28 +1,28 @@
 #include "cl_application.h"
 cl_application::cl_application(cl_base* parent):cl_base(parent){}
-bool cl_application::bild_tree_objects()
+void cl_application::bild_tree_objects()
 {
-	string temp_root,temp_object;
+	string temp_object,path;
 	int cl_num;
-	cl_base* temp_root_obj;
 	cin >> temp_object;
 	this->name_setter(temp_object);
 	while (true)
 	{
-		cin >> temp_root;
-		if (temp_root == "endtree")
+		cin >> path;
+		if (path == "endtree")
 		{
-			return true;
+			return;
 		}
 		cin>>temp_object>>cl_num;
-		temp_root_obj= get_obj_by_path(temp_root);
+		cl_base* temp_root_obj= get_obj_by_path(path);
 		if(temp_root_obj== nullptr)
 		{
 			cout<<"Object tree";
 			print_tree(false);
-			cout<<endl<<"The head object "<<temp_root<<" is not found ";
-			return false;
+			cout<<endl<<"The head object "<<path<<" is not found";
+			exit(0);
 		}
+
 		switch(cl_num)
 		{
 			case 2:
@@ -88,5 +88,6 @@ int cl_application::exec_app()
 			else cout<<path<<"     Object is not found";
 		}
 	}
-	return 0;
+	return 1;
+
 }
