@@ -255,6 +255,7 @@ void cl_base::emit_signal(TYPE_SIGNAL sig,string& cmd)
 	if(this->condition_getter()!=0)
 	{
 		(this->*sig)(cmd);
+
 		for (int i = 0; i < connects.size(); i++)
 		{
 			if (connects[i].sig == sig && connects[i].base->condition_getter() != 0)

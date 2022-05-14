@@ -96,7 +96,7 @@ int cl_application::exec_app()
 		cin>>cmd;
 		if(cmd=="END")
 			break;
-		else if (cmd=="SET_CONDITION"|| cmd=="EMIT" || cmd=="SET_CONNECT" || "DELETE_CONNECT")
+		else if (cmd=="SET_CONDITION")
 		{
 			cin>>first_part;
 			cl_base* from= get_obj_by_path(first_part);
@@ -104,15 +104,34 @@ int cl_application::exec_app()
 			{
 				cout<<"\nObject "<<first_part<<" is not found";
 			}
-			else if(cmd=="SET_CONDITION")
+			else
 			{
 				cin>>condition;
 				from->condition_setter(condition);
 			}
-			else if(cmd=="EMIT")
+
+		}
+		else if(cmd=="EMIT")
+		{
+			cin>>first_part;
+			cl_base* from= get_obj_by_path(first_part);
+			if(from== nullptr)
+			{
+				cout << "\nObject " << first_part << " is not found";
+			}
+			else
 			{
 				getline(cin, msg);
 				from->emit_signal(get_signal(from->get_num()), msg);
+			}
+		}
+		else if (cmd == "SET_CONNECT")
+		{
+			cin >> first_part;
+			cl_base* from = get_obj_by_path(first_part);
+			if (from == nullptr)
+			{
+				cout << "\nObject " << first_part << " is not found";
 			}
 			else
 			{
@@ -122,11 +141,28 @@ int cl_application::exec_app()
 				{
 					cout << "\nHandler object " << first_part << " is not found";
 				}
-				else if(cmd=="SET_CONNECT")
+				else
 				{
 					from->set_connect(get_signal(from->get_num()), get_slot(to->get_num()),to);
 				}
-				else if(cmd=="DELETE_CONNECT")
+			}
+		}
+		else if (cmd == "DELETE_CONNECT") {
+			cin >> first_part;
+			cl_base* from = get_obj_by_path(first_part);
+			if (from == nullptr)
+			{
+				cout << "\nObject " << first_part << " is not found";
+			}
+			else
+			{
+				cin >> second_part;
+				cl_base* to = get_obj_by_path(second_part);
+				if (to == nullptr)
+				{
+					cout << "\nHandler object " << first_part << " is not found";
+				}
+				else
 				{
 					from->delete_connect(get_signal(from->get_num()),get_slot(to->get_num()), to);
 				}
